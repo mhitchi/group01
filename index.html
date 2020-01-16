@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Group Project 01</title>
+  <!-- reference bootstrap -->
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <!-- reference google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700&display=swap" rel="stylesheet">
+  <!-- reference font awesome -->
+  <link rel="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- reference Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"></script>
+  <!-- reference our css -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="searchbar">
+          <div class="active-pink-3 active-pink-4 mb-4">
+            <input class="animated form-control search bounceInDown" id="search-input" type="text" placeholder="search events" aria-label="Search">
+              <span class="animated bounceInDown" id="search-btn">
+                <img class="search-icon" src="assets/images/search.png">
+              </span>
+          </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="options">
+          <!-- Dropdown Structure -->
+          <ul class="animated nav nav-pills bounceInUp">
+            <li class="nav-item dropdown menu">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">LOCATION</a>
+              <div class="dropdown-menu location-menu">
+                <!-- <a class="dropdown-item location-item" href="#">District of Columbia</a> -->
+              </div>
+            </li>
+            <li class="nav-item dropdown menu">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">TIME</a>
+              <div class="dropdown-menu time-menu">
+                <!-- <a class="dropdown-item time-item" href="#"></a> -->
+              </div>
+            </li>
+            <li class="nav-item dropdown menu">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">CATEGORY</a>
+              <div class="dropdown-menu category-menu">
+                <!-- <a class="dropdown-item category-item" href="#">Sports</a> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- reference moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+  <!-- reference jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2.0.0-rc.1"></script>
+  <!-- Drop Down CDN jquery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <!-- Bootstrap CDN -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <!-- reference our js -->
+  <script src="./assets/js/script.js" async defer></script>
+  
+
+
+</body>
+</html>
