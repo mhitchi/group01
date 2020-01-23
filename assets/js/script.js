@@ -53,7 +53,6 @@ $(document).ready(function () {
     }
     function denied() {
       // if permission is denied set Ticket Master queries to defualt to "Washington"(city) and DC (state)
-      // console.log('Unable to retrieve your location');
       searchAddress="";
       searchCity = "Washington";
       searchState = "DC";
@@ -62,9 +61,8 @@ $(document).ready(function () {
       main();
     }
     if (!navigator.geolocation) {
-      // console.log('Geolocation is not supported by your browser');
+      console.log('Geolocation is not supported by your browser');
     } else {
-      // console.log('Locating…');
       navigator.geolocation.getCurrentPosition(success, denied);
     }
   }
@@ -135,7 +133,6 @@ $(document).ready(function () {
       }
     }).done(function (response) {
      // Upon bad response rerender page to inform user to try new search paramaters
-      // console.log(response.page.totalElements);
       console.log(response);
       if( response.page.totalElements === 0 ){
         eventsListDOM.empty();
@@ -147,7 +144,9 @@ $(document).ready(function () {
         eventsListDOM.append(eventRowDOM);
       } else {
        // Upon good response, compare quiried event time (current time) against event start times and calculate travle time
-       console.log("City: "+searchCity+". Category: "+searchCategory+". Time: "+searchTime)
+       console.log("City: "+searchCity);
+       console.log("Category: "+searchCategory);
+       console.log("Time: "+searchTime);
         checkEvents(response);
       }
     });
@@ -160,8 +159,7 @@ $(document).ready(function () {
     viableEvents = [];
     for (var i = 0; i < response._embedded.events.length; i++) {
       var event = response._embedded.events[i]; //current event
-      var eventTime = response._embedded.events[i].dates.start.localDate+"T"+response._embedded.events[i].dates.start.localTime+"Z" ; //event dateTime
-      console.log(eventTime);
+      var eventTime = response._embedded.events[i].dates.start.localDate+" "+response._embedded.events[i].dates.start.localTime ; //event dateTime
       var eventAddress = response._embedded.events[i]._embedded.venues[0].name + " " +
         response._embedded.events[i]._embedded.venues[0].address.line1 + ", " +
         response._embedded.events[i]._embedded.venues[0].city.name + ", " +
@@ -180,21 +178,17 @@ $(document).ready(function () {
       function (response) {
         console.log(response);
         travelTime = response.time[1];
-        console.log(travelTime);
-        // travelTime calculated to determine if user can travel to event address by event start time (based on current/queried location)
-        //if time of arrival is < event start time, append current event to viable events array for display
-        var t1 = new Date(searchTime);
-        var t2 = new Date(eventTime);
-        var dif = (t1 - t2)/1000; // how much time is betwwen qurried time and event start in seconds
-        console.log(eventTime);
-        console.log(t2);
-        console.log(dif);
+        // travelTime calculated to determin if user can travel to event address by event start time (based on current/quiried location)
+        //if time of arrivale is < event start time, append current event to viable events array for display
+        var eventStart = moment(eventTime).format("LLL");
+        var qurryTime  = moment(searchTime).format("LLL");
+        var t1 = new Date(eventStart);
+        var t2 = new Date(qurryTime);
+        var dif = Math.abs((t1 - t2)/1000); // how much time is betwwen qurried time and event start in seconds
         if(dif>travelTime) {
           viableEvents.push(event); // current event from parent function checkEvents()
           renderEvents();
         }
-        console.log(viableEvents);
-        //OG renderEvents();
       }, "json");
   }
 
@@ -345,8 +339,10 @@ $(document).ready(function () {
     } else {
       for (var i = 0; i < viableEvents.length; i++) {
 
-        console.log(viableEvents[i]);
-        console.log(i);
+      //append to eventsListDOM
+      eventImageDivDOM.append(eventImageDOM);
+      eventRowDOM.append(eventImageDivDOM);
+      eventRowDOM.append(eventInfoDivDOM);
         //fill with info
         eventNameDOM.text(viableEvents[i].name);
         eventImageDivDOM.addClass('event-image-div col-5');
@@ -359,8 +355,6 @@ $(document).ready(function () {
         //eventPriceDOM.text("$" + (viableEvents[i].priceRanges[0].min));
         // eventPriceDOM.text("$" + (viableEvents[i].priceRanges[0].min) + " -$" + (viableEvents[i].priceRanges[0].max));
         eventURL = viableEvents[i].url;
-
-        // console.log[i];
 
         //append to eventsListDOM
         eventImageDivDOM.append(eventImageDOM);
