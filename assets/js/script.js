@@ -180,8 +180,9 @@ $(document).ready(function () {
       function (response) {
         console.log(response);
         travelTime = response.time[1];
-        // travelTime calculated to determin if user can travel to event address by event start time (based on current/quiried location)
-        //if time of arrivale is < event start time, append current event to viable events array for display
+        console.log(travelTime);
+        // travelTime calculated to determine if user can travel to event address by event start time (based on current/queried location)
+        //if time of arrival is < event start time, append current event to viable events array for display
         var t1 = new Date(searchTime);
         var t2 = new Date(eventTime);
         var dif = (t1 - t2)/1000; // how much time is betwwen qurried time and event start in seconds
@@ -190,8 +191,10 @@ $(document).ready(function () {
         console.log(dif);
         if(dif>travelTime) {
           viableEvents.push(event); // current event from parent function checkEvents()
+          renderEvents();
         }
-        renderEvents();
+        console.log(viableEvents);
+        //OG renderEvents();
       }, "json");
   }
 
@@ -317,7 +320,7 @@ $(document).ready(function () {
   
   //render events
   function renderEvents() {
-    eventsListDOM.html = "";
+    eventsListDOM.innerHTML = "";
     var eventRowDOM = $('<div>');
     eventRowDOM.addClass('animated row event-row col-12 fadeInUp');
     var eventInfoDivDOM = $('<div>');
@@ -328,43 +331,58 @@ $(document).ready(function () {
     var eventTimeDOM = $('<p>');
     var eventPriceDOM = $('<p>');
     var eventURL;
-    //make DOM elements for each array item
-    for (var i = 0; i < viableEvents.length; i++) {
 
-      //fill with info
-      eventNameDOM.text(viableEvents[i].name);
-      eventImageDivDOM.addClass('event-image-div col-5');
-      eventInfoDivDOM.addClass('event-info-div col-7');
-      eventImageDOM.attr('src', viableEvents[i].images[3].url);
-      eventImageDOM.attr('alt', '');
-      eventImageDOM.addClass('event-image');
-      eventLocationDOM.text(viableEvents[i]._embedded.venues[0].name);
-      eventTimeDOM.text(moment(viableEvents[i].dates.start.dateTime).format('ha'));
-      //eventPriceDOM.text("$" + (viableEvents[i].priceRanges[0].min));
-      // eventPriceDOM.text("$" + (viableEvents[i].priceRanges[0].min) + " -$" + (viableEvents[i].priceRanges[0].max));
-      eventURL = viableEvents[i].url;
-
-      // console.log[i];
-
-      //append to eventsListDOM
-      eventImageDivDOM.append(eventImageDOM);
-      eventRowDOM.append(eventImageDivDOM);
-      eventRowDOM.append(eventInfoDivDOM);
-
-      eventInfoDivDOM.append(eventNameDOM);
-      eventInfoDivDOM.append(eventLocationDOM);
-      eventInfoDivDOM.append(eventTimeDOM);
-      eventInfoDivDOM.append(eventPriceDOM);
-      // eventInfoDivDOM.append(eventURL);
-
+    console.log(viableEvents.length);
+    //if viableEvents isn't empty, make DOM elements for each array item
+    if( viableEvents.length > 0 ) {
+      eventsListDOM.empty();
+      var eventRowDOM = $('<div>');
+      eventRowDOM.addClass('animated row event-row col-12 fadeInUp');
+      var emptyEventDOM = $('<h4>');
+      emptyEventDOM.text("There are no events that meet your terms. Please refresh the page and try again.");
+      eventRowDOM.append(emptyEventDOM);
       eventsListDOM.append(eventRowDOM);
+    } else {
+      for (var i = 0; i < viableEvents.length; i++) {
 
-      eventRowDOM.on('click', function() {
-        window.open(eventURL, '_blank');
-      });
-      // eventRowDOM.on('mouseover', function() {
-      //   eventRowDOM.addClass('animated pulse');
-      // });
+        console.log(viableEvents[i]);
+        console.log(i);
+        //fill with info
+        eventNameDOM.text(viableEvents[i].name);
+        eventImageDivDOM.addClass('event-image-div col-5');
+        eventInfoDivDOM.addClass('event-info-div col-7');
+        //eventImageDOM.attr('src', viableEvents[i].images[3].url);
+        eventImageDOM.attr('alt', '');
+        eventImageDOM.addClass('event-image');
+        eventLocationDOM.text(viableEvents[i]._embedded.venues[0].name);
+        eventTimeDOM.text(moment(viableEvents[i].dates.start.dateTime).format('ha'));
+        //eventPriceDOM.text("$" + (viableEvents[i].priceRanges[0].min));
+        // eventPriceDOM.text("$" + (viableEvents[i].priceRanges[0].min) + " -$" + (viableEvents[i].priceRanges[0].max));
+        eventURL = viableEvents[i].url;
+
+        // console.log[i];
+
+        //append to eventsListDOM
+        eventImageDivDOM.append(eventImageDOM);
+        eventRowDOM.append(eventImageDivDOM);
+        eventRowDOM.append(eventInfoDivDOM);
+
+        eventInfoDivDOM.append(eventNameDOM);
+        eventInfoDivDOM.append(eventLocationDOM);
+        eventInfoDivDOM.append(eventTimeDOM);
+        eventInfoDivDOM.append(eventPriceDOM);
+        // eventInfoDivDOM.append(eventURL);
+
+        eventsListDOM.append(eventRowDOM);
+
+        eventRowDOM.on('click', function() {
+          window.open(eventURL, '_blank');
+        });
+        // eventRowDOM.on('mouseover', function() {
+        //   eventRowDOM.addClass('animated pulse');
+        // });
+        console.log(i);
+      }
     }
   }
   getCurrentLocation();
