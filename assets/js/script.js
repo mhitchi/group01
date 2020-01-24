@@ -328,7 +328,7 @@ $(document).ready(function () {
 
     console.log(viableEvents.length);
     //if viableEvents isn't empty, make DOM elements for each array item
-    if( viableEvents.length > 0 ) {
+    if( viableEvents.length === 0 ) {
       eventsListDOM.empty();
       var eventRowDOM = $('<div>');
       eventRowDOM.addClass('animated row event-row col-12 fadeInUp');
