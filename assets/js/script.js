@@ -347,7 +347,7 @@ $(document).ready(function () {
         eventNameDOM.text(viableEvents[i].name);
         eventImageDivDOM.addClass('event-image-div col-5');
         eventInfoDivDOM.addClass('event-info-div col-7');
-        //eventImageDOM.attr('src', viableEvents[i].images[3].url);
+        eventImageDOM.attr('src', viableEvents[i].images[3].url);
         eventImageDOM.attr('alt', '');
         eventImageDOM.addClass('event-image');
         eventLocationDOM.text(viableEvents[i]._embedded.venues[0].name);
